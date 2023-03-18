@@ -1,16 +1,13 @@
 
 //test
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class Main extends JPanel {
 
@@ -19,9 +16,12 @@ public class Main extends JPanel {
     private boolean b_double = false; // flag for double down
     private int bank = 20;
     private JTextField bet;
+    private JLabel betLabel;
     private String bet_s;
     private double d_bet;
-
+    //make variables for dimensions of CardPanel
+    private int CPanel_width = 450;
+    private int CPanel_height = 300;
     // constructor = place everything you see in the Main Panel for start of game
     public Main() {
 
@@ -43,24 +43,29 @@ public class Main extends JPanel {
         // ...then add the buttons to the panel
         JButton higher = new JButton("Higher");
         higher.addActionListener(evt -> board.doHigher()); // method found in class CardPanel
-        buttonPanel.add(higher);
+        buttonPanel.add(higher); // add button to buttonPanel
 
-        JButton lower = new JButton("Lower");
+        JButton lower = new JButton("Lower"); // create button
         lower.addActionListener(evt -> board.doLower()); // method found in class CarPanel
-        buttonPanel.add(lower);
+        buttonPanel.add(lower);// add button to buttonPanel
 
-        JButton newGame = new JButton("New Game");
+        JButton newGame = new JButton("New Game"); // create button
         newGame.addActionListener(evt -> board.doNewGame()); // method found in class CardPanel
-        buttonPanel.add(newGame);
+        buttonPanel.add(newGame); // add button to buttonPanel
 
-        JButton double_down = new JButton("Double Down");
-        double_down.addActionListener(evt -> board.doDouble()); // method found in class CarPanel
-        buttonPanel.add(double_down);
+        JButton double_down = new JButton("Double Down"); 
+        double_down.addActionListener(evt -> board.doDouble()); 
+        buttonPanel.add(double_down); // add button to buttonPanel
 
         // create a red border around the Main JPanel
         setBorder(BorderFactory.createLineBorder(new Color(130, 50, 40), 3));
 
-        bet = new JTextField("bet [only numbers]", 10);
+        // create bet label
+        betLabel = new JLabel("Bet Amount $:");
+        buttonPanel.add(betLabel);
+
+        //create bet text field
+        bet = new JTextField("0", 4);
         buttonPanel.add(bet);
 
     } // end constructor
@@ -68,6 +73,7 @@ public class Main extends JPanel {
     public static void main(String[] args) {
         JFrame window = new JFrame("High/Low Card Game");
         Main content = new Main();
+        window.setIconImage(new ImageIcon("src\\images\\spade.png").getImage());
         window.setContentPane(content);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocation(120, 70);
@@ -102,7 +108,7 @@ public class Main extends JPanel {
             setForeground(Color.GREEN);
             smallFont = new Font("SansSerif", Font.PLAIN, 12);
             bigFont = new Font("Serif", Font.BOLD, 14);
-            setPreferredSize(new Dimension(450, 300));
+            setPreferredSize(new Dimension(CPanel_width, CPanel_height));
             b_double = false; // Reinitialize Double down flag
             deck = new Deck(); // Create the deck and hand to use for this game.
             hand = new Hand(); // Create a new hand for use in this game
@@ -119,91 +125,13 @@ public class Main extends JPanel {
          * wrong or if the user has made three correct predictions.
          */
         void doHigher() {
-            // if (gameInProgress == false) {
-            // // If the game has ended, it was an error to click "Higher",
-            // // So set up an error message and abort processing.
-            // message = "Click \"New Game\" to start a new game!";
-            // repaint();
-            // return;
-            // }
-            // hand.addCard(deck.dealCard()); // Deal a card to the hand.
-            // int cardCt = hand.getCardCount();
-            // Card thisCard = hand.getCard(cardCt - 1); // Card just dealt.
-            // Card prevCard = hand.getCard(cardCt - 2); // The previous card.
-            // if (thisCard.getValue() < prevCard.getValue()) {
-            // gameInProgress = false;
-            // message = "Too bad! You lose.";
-            // losses++;
-            // } else if (thisCard.getValue() == prevCard.getValue()) {
-            // gameInProgress = false;
-            // message = "Too bad! You lose on ties.";
-            // losses++;
-            // } else if (cardCt == 4) {
-            // gameInProgress = false;
-            // message = "You win! You made three correct guesses.";
-            // wins++;
-            // } else {
-            // message = "Got it right! Try for " + cardCt + ".";
-            // }
-            // code that was used
-            // if (gameInProgress == false) {
-            // // If the game has ended, it was an error to click "Lower",
-            // // So set up an error message and abort processing.
-            // message = "Click \"New Game\" to start a new game!";
-            // repaint();
-            // return;
-            // }
-            //
-            // //if the game is in progress
-            // hand.addCard(deck.dealCard()); // Deal a card to the hand.
-            //
-            // int cardCt = hand.getCardCount();
-            // Card thisCard = hand.getCard(cardCt - 1); // Card just dealt.
-            // Card prevCard = hand.getCard(cardCt - 2); // The previous card.
-            //
-            //
-            // if(b_double == true) {
-            // d_hand.addCard(d_deck.dealCard());
-            // Card d_thisCard = d_hand.getCard(cardCt-1);
-            // Card d_prevCard = d_hand.getCard(cardCt-2);
-            // boolean isHigher= thisCard.getValue() > prevCard.getValue() &&
-            // d_thisCard.getValue() > d_prevCard.getValue();
-            //
-            // if (isHigher && cardCt == 4) { //higher guess is true and game over
-            // gameInProgress = false;
-            // message = "You win! You made three correct guesses.";
-            // wins++;
-            // } else if (isHigher) { //higher guess is true and game continues
-            // message = "Got it right! Try for " + cardCt + ".";
-            // } else {//higher guess is false and you lose. Game over.
-            // gameInProgress = false;
-            // message = "Too bad! You lose.";
-            // losses++;
-            // }
-            // //repaint();
-            // } else{
-            // if (thisCard.getValue() < prevCard.getValue()) { //guess is wrong, you lose,
-            // game over
-            // gameInProgress = false;
-            // message = "Too bad! You lose.";
-            // losses++;
-            // } else if (thisCard.getValue() == prevCard.getValue()) { //guess is wrong,
-            // its a tie, you lose, game over
-            // gameInProgress = false;
-            // message = "Too bad! You lose on ties.";
-            // losses++;
-            // } else if (cardCt == 4) { //guess is correct, game is over, you win.
-            // gameInProgress = false;
-            // message = "You win! You made three correct guesses.";
-            // wins++;
-            // } else { //guess is correct, continue game
-            // message = "Got it right! Try for " + cardCt + ".";
-            // }
-            // //repaint();
-            // }
-            //
-            // repaint();
-            evaluateGuess("Higher");
+            if (isBetValid()) {
+                enableBet(false);
+                evaluateGuess("Higher");
+            } else {
+                repaint();
+            }
+
         } // end doHigher()
 
         /**
@@ -211,11 +139,24 @@ public class Main extends JPanel {
          * Check the user's prediction. Game ends if user guessed
          * wrong or if the user has made three correct predictions.
          */
+        void doLower() {
+            if (isBetValid()) {
+                enableBet(false);
+                evaluateGuess("Lower");
+            } else {
+                repaint();
+            }
+        } // end doLower()
 
+        /**
+         * Called when the user clicks the "Double Down" button.
+         * Activates another deck and hand for the user to guess
+         * higher or lower.
+         */
         void doDouble() {
-            b_double = true;
             int cardCt = hand.getCardCount();
             if (cardCt == 1) {
+                b_double = true; // set double down flag
                 d_deck = new Deck(); // Create the deck and hand to use for this game.
                 d_hand = new Hand();
                 d_deck.shuffle();
@@ -226,7 +167,15 @@ public class Main extends JPanel {
             } // end if cardct
         }// end doDouble
 
-        void evaluateGuess(String btnClicked) {
+        
+        /**
+         * Called when the user clicks the higher or lower button.
+         * Checks the user's prediction and updates the message
+         * that will be displayed.  If the user has made three
+         * correct predictions, the game ends.
+         */     
+        void evaluateGuess(String btnClicked) 
+        {
             if (!gameInProgress) {
                 // If the game has ended, it was an error to click "Lower",
                 // So set up an error message and abort processing.
@@ -298,67 +247,55 @@ public class Main extends JPanel {
                 bank -= d_bet;
             }
             repaint();
-        } // end doLower()
+        } // end evaluateGuess()
 
-        void doLower() {
-            // if (gameInProgress == false) {
-            // // If the game has ended, it was an error to click "Lower",
-            // // So set up an error message and abort processing.
-            // message = "Click \"New Game\" to start a new game!";
-            // repaint();
-            // return;
-            // }
-            //
-            // //if the game is in progress
-            // hand.addCard(deck.dealCard()); // Deal a card to the hand.
-            //
-            // int cardCt = hand.getCardCount();
-            // Card thisCard = hand.getCard(cardCt - 1); // Card just dealt.
-            // Card prevCard = hand.getCard(cardCt - 2); // The previous card.
-            //
-            //
-            // if(b_double == true) {
-            // d_hand.addCard(d_deck.dealCard());
-            // Card d_thisCard = d_hand.getCard(cardCt-1);
-            // Card d_prevCard = d_hand.getCard(cardCt-2);
-            // boolean isLower = thisCard.getValue() < prevCard.getValue() &&
-            // d_thisCard.getValue() < d_prevCard.getValue();
-            //
-            // if (isLower && cardCt == 4) { //Lower guess is true and game over
-            // gameInProgress = false;
-            // message = "You win! You made three correct guesses.";
-            // wins++;
-            // } else if (isLower) { //Lower guess is true and game continues
-            // message = "Got it right! Try for " + cardCt + ".";
-            // } else {//Lower guess is false and you lose. Game over.
-            // gameInProgress = false;
-            // message = "Too bad! You lose.";
-            // losses++;
-            // }
-            //
-            // } else{
-            // if (thisCard.getValue() > prevCard.getValue()) { //guess is wrong, you lose,
-            // game over
-            // gameInProgress = false;
-            // message = "Too bad! You lose.";
-            // losses++;
-            // } else if (thisCard.getValue() == prevCard.getValue()) { //guess is wrong,
-            // its a tie, you lose, game over
-            // gameInProgress = false;
-            // message = "Too bad! You lose on ties.";
-            // losses++;
-            // } else if (cardCt == 4) { //guess is correct, game is over, you win.
-            // gameInProgress = false;
-            // message = "You win! You made three correct guesses.";
-            // wins++;
-            // } else { //guess is correct, continue game
-            // message = "Got it right! Try for " + cardCt + ".";
-            // }
-            //
-            // }
-            // repaint();
-            evaluateGuess("Lower");
-        } // end doLower()
+        /**
+         * Checks to see if the user can bet
+         * updates the message that will be displayed
+         * according to the bet amount.
+         */
+        
+
+        boolean isBetValid() {
+            bet_s = bet.getText();
+            d_bet = Double.parseDouble(bet_s);
+            if (bank >= 100) {
+                message = "You have too much money for the bank!";
+                repaint();
+                return false;
+            } else if (bank <= 0) {
+                message = "you are broke :[";
+                repaint();
+                return false;
+            } else if (d_bet > bank) {
+                message = "Bet amount exceeds Bank!";
+                repaint();
+                return false;
+            } else if (d_bet < 0) {
+                message = "Bet must be greater!";
+                repaint();
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        
+
+        /**
+         * Enable or disable the "Higher" and "Lower" buttons.
+         * This is done to prevent the user from changing the
+         * bet while the game is in progress.
+         */
+        void enableBet(boolean bEnable) 
+        { 
+            if (bEnable) {
+                bet.setEditable(true);
+            } else {
+                bet.setEditable(false);
+            }
+        }
+        
 
         /**
          * Called by the constructor, and called when
@@ -373,17 +310,11 @@ public class Main extends JPanel {
                 repaint();
                 return;
             }
-            bet_s = bet.getText();
-            d_bet = Double.parseDouble(bet_s);
-            if (bank >= 100) {
-                message = "You have too much money for the bank!";
-                repaint();
-                return;
-            } else if (bank <= 0) {
-                message = "You are broke :[";
-                repaint();
-                return;
-            } else {
+
+
+            enableBet(true);
+
+            if (isBetValid()) {
                 b_double = false; // Reinitialize Double down flag
                 deck = new Deck(); // Create the deck and hand to use for this game.
                 hand = new Hand(); // Create a new hand for use in this game
@@ -401,14 +332,15 @@ public class Main extends JPanel {
          * across the canvas. If the game is in progress, an extra
          * card is drawn face down representing the card to be dealt next.
          */
-        public void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) 
+        {
             super.paintComponent(g);
             g.setFont(bigFont);
             g.drawString(message, 10, 260);
             g.setFont(smallFont);
-            g.drawString("losses: " + losses, 10, 285);
-            g.drawString("wins: " + wins, 330, 285);
-            g.drawString("money: $" + bank, 150, 285);
+            g.drawString("losses: " + losses, CPanel_width-10, 285);
+            g.drawString("wins: " + wins, 10, 285);
+            g.drawString("bank: $" + bank, CPanel_width/2, 285);
             g.setFont(smallFont);
             int cardCt = hand.getCardCount();
             for (int i = 0; i < cardCt; i++) {
@@ -450,55 +382,6 @@ public class Main extends JPanel {
                 g.drawString("of", x + 10, y + 50);
                 g.drawString(card.getSuitAsString(), x + 10, y + 70);
             }
-
-            // int y_offset = 120;
-            // //If this is double, we need to create another row of cards
-            // if(b_double == true) {
-            // if (card == null) {
-            // // Draw a face-down card
-            //
-            // g.setColor(Color.BLUE);
-            // g.fillRect(x, y+y_offset, 80, 100);
-            // g.setColor(Color.WHITE);
-            // g.drawRect(x + 3, y + y_offset+3, 73, 93);
-            // g.drawRect(x + 4, y + y_offset+4, 71, 91);
-            // } else {
-            // g.setColor(Color.WHITE);
-            // g.fillRect(x, y+y_offset, 80, 100);
-            // g.setColor(Color.GRAY);
-            // g.drawRect(x, y+y_offset, 79, 99);
-            // g.drawRect(x + 1, y + y_offset + 1, 77, 97);
-            // if (card.getSuit() == Card.DIAMONDS || card.getSuit() == Card.HEARTS)
-            // g.setColor(Color.RED);
-            // else
-            // g.setColor(Color.BLACK);
-            // g.drawString(card.getValueAsString(), x + 10, y + y_offset + 30);
-            // g.drawString("of", x + 10, y + y_offset+50);
-            // g.drawString(card.getSuitAsString(), x + 10, y + 70+y_offset);
-            // }
-            // }
-
-            // if (b_double == true && card != null) {
-            //
-            // // Draw a face-down card
-            // g.setColor(Color.BLUE);
-            // g.fillRect(x + 90, y + 120, 80, 100);
-            // g.setColor(Color.WHITE);
-            // g.drawRect(x + 90 + 3, y + 123, 73, 93);
-            // g.drawRect(x + 90 + 4, y + 124, 71, 91);
-            // g.setColor(Color.WHITE);
-            // g.fillRect(x, y + 120, 80, 100);
-            // g.setColor(Color.GRAY);
-            // g.drawRect(x, y + 120, 79, 99);
-            // g.drawRect(x + 1, y + 121, 77, 97);
-            // if (card.getSuit() == Card.DIAMONDS || card.getSuit() == Card.HEARTS)
-            // g.setColor(Color.RED);
-            // else
-            // g.setColor(Color.BLACK);
-            // g.drawString(card.getValueAsString(), x + 10, y + 150);
-            // g.drawString("of", x + 10, y + 170);
-            // g.drawString(card.getSuitAsString(), x + 10, y + 190);
-            // }
         } // end drawCard()
 
     } // end nested class CardPanel
