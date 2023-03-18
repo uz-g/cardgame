@@ -19,9 +19,10 @@ public class Main extends JPanel {
     private JLabel betLabel;
     private String bet_s;
     private double d_bet;
-    //make variables for dimensions of CardPanel
+    // make variables for dimensions of CardPanel
     private int CPanel_width = 450;
     private int CPanel_height = 300;
+
     // constructor = place everything you see in the Main Panel for start of game
     public Main() {
 
@@ -53,8 +54,8 @@ public class Main extends JPanel {
         newGame.addActionListener(evt -> board.doNewGame()); // method found in class CardPanel
         buttonPanel.add(newGame); // add button to buttonPanel
 
-        JButton double_down = new JButton("Double Down"); 
-        double_down.addActionListener(evt -> board.doDouble()); 
+        JButton double_down = new JButton("Double Down");
+        double_down.addActionListener(evt -> board.doDouble());
         buttonPanel.add(double_down); // add button to buttonPanel
 
         // create a red border around the Main JPanel
@@ -64,7 +65,7 @@ public class Main extends JPanel {
         betLabel = new JLabel("Bet Amount $:");
         buttonPanel.add(betLabel);
 
-        //create bet text field
+        // create bet text field
         bet = new JTextField("0", 4);
         buttonPanel.add(bet);
 
@@ -167,15 +168,13 @@ public class Main extends JPanel {
             } // end if cardct
         }// end doDouble
 
-        
         /**
          * Called when the user clicks the higher or lower button.
          * Checks the user's prediction and updates the message
-         * that will be displayed.  If the user has made three
+         * that will be displayed. If the user has made three
          * correct predictions, the game ends.
-         */     
-        void evaluateGuess(String btnClicked) 
-        {
+         */
+        void evaluateGuess(String btnClicked) {
             if (!gameInProgress) {
                 // If the game has ended, it was an error to click "Lower",
                 // So set up an error message and abort processing.
@@ -254,7 +253,6 @@ public class Main extends JPanel {
          * updates the message that will be displayed
          * according to the bet amount.
          */
-        
 
         boolean isBetValid() {
             bet_s = bet.getText();
@@ -280,22 +278,18 @@ public class Main extends JPanel {
             }
         }
 
-        
-
         /**
          * Enable or disable the "Higher" and "Lower" buttons.
          * This is done to prevent the user from changing the
          * bet while the game is in progress.
          */
-        void enableBet(boolean bEnable) 
-        { 
+        void enableBet(boolean bEnable) {
             if (bEnable) {
                 bet.setEditable(true);
             } else {
                 bet.setEditable(false);
             }
         }
-        
 
         /**
          * Called by the constructor, and called when
@@ -310,7 +304,6 @@ public class Main extends JPanel {
                 repaint();
                 return;
             }
-
 
             enableBet(true);
 
@@ -332,15 +325,14 @@ public class Main extends JPanel {
          * across the canvas. If the game is in progress, an extra
          * card is drawn face down representing the card to be dealt next.
          */
-        public void paintComponent(Graphics g) 
-        {
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setFont(bigFont);
             g.drawString(message, 10, 260);
             g.setFont(smallFont);
-            g.drawString("losses: " + losses, CPanel_width-10, 285);
+            g.drawString("losses: " + losses, CPanel_width - 10, 285);
             g.drawString("wins: " + wins, 10, 285);
-            g.drawString("bank: $" + bank, CPanel_width/2, 285);
+            g.drawString("bank: $" + bank, CPanel_width / 2, 285);
             g.setFont(smallFont);
             int cardCt = hand.getCardCount();
             for (int i = 0; i < cardCt; i++) {
