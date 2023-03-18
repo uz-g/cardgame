@@ -71,7 +71,7 @@ public class Card {
      * @returns the suit, which is one of the constants Card.SPADES, 
      * Card.HEARTS, Card.DIAMONDS, Card.CLUBS, or Card.JOKER
      */
-    public int getSuit() {
+    public int getSuit() { // returns the suit of the card
         return suit;
     }
 
